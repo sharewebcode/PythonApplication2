@@ -83,6 +83,7 @@ values = Reference(sheet, range_string='Sheet1!C2:C13')
 series = Series(values, title='LG전자')
 chart.append(series)
 
+# 
 sheet.add_chart(chart, 'E1')
 
 wb.save('merge.xlsx')
