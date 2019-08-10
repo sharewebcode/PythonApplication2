@@ -12,6 +12,7 @@ from openpyxl.styles import Border, Side, Color, PatternFill
 # 홀수행 추출
 #df[1::2].to_excel('odd.xlsx')
 
+# 파일 읽어서 병합하기
 df_Sam = pd.read_excel('2017Sam.xlsx')
 df_Sam.set_index('date', inplace=True)
 
@@ -23,8 +24,10 @@ df_merge = pd.DataFrame()
 df_merge['삼성'] = df_Sam['total']
 df_merge['LG'] = df_LG['total']
 
+# 병합파일 저장
 df_merge.to_excel('merge.xlsx')
 
+# 병합된 파일 읽기
 wb = openpyxl.load_workbook('merge.xlsx')
 sheet = wb.active
 
@@ -42,6 +45,7 @@ sheet['A14'].value = '합계'
 sheet['B14'].value = '=SUM(B2:B13)'
 sheet['C14'].value = '=SUM(C2:C13)'
 
+# 스타일 정의
 font_11 = Font(name='맑은 고딕', size=11, bold=True)
 font_15 = Font(name='맑은 고딕', size=15, bold=True)
 
@@ -61,6 +65,7 @@ cell_sum.alignment = align_center
 cell_sum.border = border_thin
 cell_sum.fill = fill_orange
 
+# 스타일 적용
 for row in sheet['B2:C14']:
     for cell in row:        
         cell.border = border_thin
@@ -71,7 +76,7 @@ for row in sheet['B14:C14']:
         cell.alignment = align_vcenter
         cell.fill = fill_orange
 
-
+# 바 차트 만들기
 chart = BarChart()
 chart.title = '2017년 월별 광고비 (억원)'
 
@@ -83,9 +88,10 @@ values = Reference(sheet, range_string='Sheet1!C2:C13')
 series = Series(values, title='LG전자')
 chart.append(series)
 
-# 
+# 바 차트 생성
 sheet.add_chart(chart, 'E1')
 
+# 파일 저장
 wb.save('merge.xlsx')
 
 
