@@ -93,5 +93,3 @@ sheet.add_chart(chart, 'E1')
 
 # 파일 저장
 wb.save('merge.xlsx')
-
-
